@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'">
+<title>Cap-For · Administración</title><link rel="stylesheet" href="style.css"><script src="app.js" defer></script>
+</head>
+<body>
+<aside><div class="brand"><div class="logo">CF</div><div><b>Cap-For</b><small>ITSQMET · UGPA</small></div></div>
+<div class="small-label">ADMINISTRACIÓN</div>
+<nav><button class="nav active" data-view="documents">▣ &nbsp; Gestor documental</button>
+<button class="nav" data-view="teachers">♙ &nbsp; Docentes</button>
+<div class="nav-muted">Capacitaciones · Próximamente</div><div class="nav-muted">Formación · Próximamente</div>
+<div class="nav-muted">Informes · Próximamente</div></nav>
+<p class="side-note">Primera fase · 0.2.0<br>PDF almacenados localmente<br>Firebase: conexión pendiente</p></aside>
+<main>
+<header><div><span class="kicker">UNIDAD DE GESTIÓN DE PROCESOS ACADÉMICOS</span><h1 id="page-title">Gestor documental</h1>
+<p id="page-desc">Descarga individual y masiva de PDF de capacitación y formación.</p></div><span class="pill">Administrador · Local</span></header>
+<section id="documents-view">
+<div class="stats"><article><small>Documentos</small><strong id="stat-total">0</strong></article><article><small>Filtrados</small><strong id="stat-filtered">0</strong></article><article><small>Firmados recibidos</small><strong id="stat-signed">0</strong></article><article><small>Docentes activos</small><strong id="stat-active">0</strong></article></div>
+<section class="card"><h2>Importar documentos existentes</h2><p>Registra los PDF sin subirlos a GitHub. Si la cédula existe en Docentes, se completarán sus datos automáticamente.</p>
+<form id="import-form">
+<label>Cédula (opcional para archivos antiguos)<input id="imp-ci" inputmode="numeric" maxlength="10" placeholder="10 dígitos"></label>
+<label>Docente<input id="imp-nombre" placeholder="Nombre completo" required></label>
+<label>Tipo de documento<select id="imp-tipo" required></select></label>
+<label>Mes de emisión<input id="imp-periodo" type="month" required value="2026-11"></label>
+<label>Código (si ya existe)<input id="imp-codigo" placeholder="UGPA-RGI..."></label>
+<button class="primary" type="submit">Importar PDF</button></form></section>
+<section class="card"><div class="card-header"><div><h2>Biblioteca documental</h2><p>Los filtros determinan el contenido de «Descargar filtrados».</p></div><div class="actions">
+<button id="down-filtered">Descargar filtrados (ZIP)</button><button class="primary" id="down-everything">Descargar TODOS (ZIP)</button></div></div>
+<div class="filters"><input id="q" placeholder="Buscar docente, cédula, nombre o código" aria-label="Buscar documentos">
+<select id="kind"><option value="">Todos los tipos</option></select><input id="month" type="month" aria-label="Mes de emisión"></div>
+<div class="table-scroll"><table><thead><tr><th>Docente</th><th>Documento</th><th>Mes</th><th>Estado</th><th>Archivo</th><th>Descargas</th></tr></thead><tbody id="doc-rows"></tbody></table></div></section>
+</section>
+<section id="teachers-view" hidden><section class="card"><h2>Administrar docentes</h2><p>La cédula identifica al docente. Los inactivos se excluyen de los indicadores futuros, pero sus archivos se conservan.</p>
+<form id="teacher-form">
+<label>Cédula<input id="t-ci" required inputmode="numeric" maxlength="10" pattern="[0-9]{10}"></label>
+<label>Nombre completo<input id="t-nombre" required></label>
+<label>Carrera<input id="t-carrera" placeholder="Carrera"></label>
+<label>Sede<input id="t-sede" placeholder="Sede"></label>
+<label>Rol<select id="t-coord"><option value="no">Docente</option><option value="si">Docente y coordinador</option></select></label>
+<label>Estado<select id="t-active"><option value="si">Activo</option><option value="no">Inactivo</option></select></label>
+<button class="primary" type="submit">Guardar docente</button></form></section>
+<section class="card"><div class="card-header"><div><h2>Nómina de docentes</h2><p>Selecciona «Editar» para actualizar o dar de baja un docente.</p></div></div>
+<div class="table-scroll"><table><thead><tr><th>Cédula</th><th>Docente</th><th>Carrera</th><th>Sede</th><th>Coordinador</th><th>Estado</th><th></th></tr></thead><tbody id="teacher-rows"></tbody></table></div></section></section>
+<div id="toast" role="status" aria-live="polite"></div>
+</main></body></html>
